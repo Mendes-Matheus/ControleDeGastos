@@ -1,25 +1,33 @@
-var builder = WebApplication.CreateBuilder(args);
+    using ControleDeGastos.Data;
+    using Microsoft.EntityFrameworkCore;
 
-// Add services to the container.
+    var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+    // Add services to the container.
 
-var app = builder.Build();
+    builder.Services.AddControllers();
+    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    builder.Services.AddDbContext<AppDbContext>(options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    });
 
-app.UseHttpsRedirection();
+    var app = builder.Build();
 
-app.UseAuthorization();
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
 
-app.MapControllers();
+    app.UseHttpsRedirection();
 
-app.Run();
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
