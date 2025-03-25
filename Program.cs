@@ -1,5 +1,8 @@
     using ControleDeGastos.Data;
-    using Microsoft.EntityFrameworkCore;
+using ControleDeGastos.Service.Pessoa;
+using ControleDeGastos.Service.Transacao;
+using ControleDeGastos.Service.Transferencia;
+using Microsoft.EntityFrameworkCore;
 
     var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,10 @@
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
+
+    builder.Services.AddScoped<PessoaServiceInterface, PessoaService>();
+    builder.Services.AddScoped<TransacaoServiceInterface, TransacaoService>();
+    builder.Services.AddScoped<TransferenciaServiceInterface, TransferenciaService>();
 
     var app = builder.Build();
 
