@@ -1,9 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ControleDeGastos.Model;
 
-namespace ControleDeGastos.Models
+namespace ControleDeGastos.Model
 {
 
     // Enum que define os tipos possíveis de transações: Despesa, Receita ou Mesada
@@ -15,7 +14,7 @@ namespace ControleDeGastos.Models
     }
 
     [Table("Transacao")] // Indica que essa classe mapeia uma tabela chamada "Transacao" no banco de dados
-    public class Transacao
+    public class TransacaoModel
     {
 
         // Define a chave primária da entidade. O valor será gerado automaticamente pelo banco de dados
@@ -47,16 +46,16 @@ namespace ControleDeGastos.Models
         public long PessoaId { get; set; }
 
         // A propriedade de navegação que permite acessar os dados da pessoa associada a essa transação
-        public required Pessoa Pessoa { get; init; }
+        public required PessoaModel Pessoa { get; init; }
 
         // Construtor padrão da classe, necessário para a criação de uma instância sem parâmetros
-        public Transacao()
+        public TransacaoModel()
         {
         }
 
         // Construtor com parâmetros para inicializar todas as propriedades da classe
         // Este é útil para criar uma instância da transação com valores específicos
-        public Transacao(long id, string descricao, double valor, DateTime dataHora, TransacaoTipo tipoTransacao, long pessoaId, Pessoa pessoa)
+        public TransacaoModel(long id, string descricao, double valor, DateTime dataHora, TransacaoTipo tipoTransacao, long pessoaId, PessoaModel pessoa)
         {
             Id = id;
             Descricao = descricao;
@@ -67,7 +66,7 @@ namespace ControleDeGastos.Models
             Pessoa = pessoa;
         }
 
-        public Transacao(string descricao, double valor, DateTime dataHora)
+        public TransacaoModel(string descricao, double valor, DateTime dataHora)
         {
             Descricao = descricao;
             Valor = valor;

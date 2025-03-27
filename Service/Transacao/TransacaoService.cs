@@ -1,6 +1,6 @@
 ﻿namespace ControleDeGastos.Service.Transacao
 {
-    public class TransacaoService : TransacaoServiceInterface
+    public class TransacaoService : ITransacaoServiceInterface
     {
     }
 }

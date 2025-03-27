@@ -1,6 +1,6 @@
 ﻿namespace ControleDeGastos.Service.Pessoa
 {
-    public interface PessoaServiceInterface
+    public interface IPessoaServiceInterface
     {
     }
 }

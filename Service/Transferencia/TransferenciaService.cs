@@ -1,6 +1,6 @@
 ﻿namespace ControleDeGastos.Service.Transferencia
 {
-    public class TransferenciaService : TransferenciaServiceInterface
+    public class TransferenciaService : ITransferenciaServiceInterface
     {
     }
 }

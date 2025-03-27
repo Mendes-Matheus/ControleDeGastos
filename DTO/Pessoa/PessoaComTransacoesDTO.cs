@@ -1,4 +1,4 @@
-﻿using ControleDeGastos.Models;
+﻿using ControleDeGastos.Model;
 
 namespace ControleDeGastos.DTO.Pessoa
 {
@@ -6,6 +6,6 @@ namespace ControleDeGastos.DTO.Pessoa
         long Id,
         string Nome,
         int Idade,
-        ICollection<Transacao> Transacoes
+        ICollection<TransacaoModel> Transacoes
     );
 }

@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using ControleDeGastos.Models;
 
 namespace ControleDeGastos.Model
 {
     // Atributo que define o nome da tabela no banco de dados. Aqui, a classe é mapeada para a tabela "pessoa"
     [Table("pessoa")]
-    public class Pessoa
+    public class PessoaModel
     {
         // Define a chave primária da entidade. O valor será gerado automaticamente pelo banco de dados
         [Key]
@@ -37,16 +36,16 @@ namespace ControleDeGastos.Model
         public double Saldo { get; set; } = 0.0;
 
         [JsonIgnore]
-        public ICollection<Transacao>? Transacoes { get; set; }
+        public ICollection<TransacaoModel>? Transacoes { get; set; }
 
         // Construtor padrão da classe, necessário para a criação de uma instância sem parâmetros
-        public Pessoa()
+        public PessoaModel()
         {
         }
 
         // Construtor com parâmetros que inicializa todas as propriedades da classe
         // Este é útil para criar uma instância da pessoa com valores específicos
-        public Pessoa(long id, string nome, int idade, double receitas, double despesas, double mesada, double saldo, ICollection<Transacao>? transacoes)
+        public PessoaModel(long id, string nome, int idade, double receitas, double despesas, double mesada, double saldo, ICollection<TransacaoModel>? transacoes)
         {
             Id = id;
             Nome = nome;

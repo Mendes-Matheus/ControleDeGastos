@@ -18,9 +18,9 @@ using Microsoft.EntityFrameworkCore;
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
 
-    builder.Services.AddScoped<PessoaServiceInterface, PessoaService>();
-    builder.Services.AddScoped<TransacaoServiceInterface, TransacaoService>();
-    builder.Services.AddScoped<TransferenciaServiceInterface, TransferenciaService>();
+    builder.Services.AddScoped<IPessoaServiceInterface, PessoaService>();
+    builder.Services.AddScoped<ITransacaoServiceInterface, TransacaoService>();
+    builder.Services.AddScoped<ITransferenciaServiceInterface, TransferenciaService>();
 
     var app = builder.Build();
 
