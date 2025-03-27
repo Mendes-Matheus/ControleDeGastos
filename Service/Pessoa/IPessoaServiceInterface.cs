@@ -12,7 +12,7 @@ namespace ControleDeGastos.Service.Pessoa
         Task<ResponseModel<object>> FindById(int idPessoa);
 
         // Método para buscar todas as pessoas no banco de dados
-        Task<ResponseModel<List<PessoaModel>>> FindAll();
+        Task<ResponseModel<List<object>>> FindAll();
 
         PessoaComTotaisDTO MapPessoaModelToDTO(PessoaModel pessoaModel);
 

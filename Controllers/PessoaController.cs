@@ -36,26 +36,34 @@ namespace ControleDeGastos.Controllers
         [HttpGet("findById/{idPessoa}")]
         public async Task<ActionResult<ResponseModel<object>>> FindById(int idPessoa)
         {
+            // Chama o método de serviço para encontrar a pessoa pelo ID e aguarda a resposta assíncrona
             var responseModel = await _pessoaServiceInterface.FindById(idPessoa);
 
+            // Verifica se a pessoa não foi encontrada
             if (!responseModel.Status)
             {
-                return NotFound(responseModel.Mensagem);
+                return NotFound(responseModel.Mensagem); // Retorna status HTTP 404 (Not Found) com a mensagem de erro
             }
 
+            // Retorna o status HTTP 200 (Ok) e os dados de resposta
             return Ok(responseModel);
         }
 
-
         // Método GET para buscar todas as pessoas
         [HttpGet("findAll")]
-        public async Task<ActionResult<ResponseModel<List<PessoaModel>>>> FindAll()
+        public async Task<ActionResult<ResponseModel<List<object>>>> FindAll()
         {
-            // Chama o método de serviço para buscar todas as pessoas
-            var pessoas = await _pessoaServiceInterface.FindAll();
+            // Chama o método de serviço para buscar todas as pessoas e aguarda a resposta assíncrona
+            var responseModel = await _pessoaServiceInterface.FindAll();
+
+            // Verifica se houve um erro na busca
+            if (!responseModel.Status)
+            {
+                return NotFound(responseModel.Mensagem); // Retorna status HTTP 404 (Not Found) com a mensagem de erro
+            }
 
             // Retorna o status HTTP 200 (Ok) e os dados de resposta
-            return Ok(pessoas);
+            return Ok(responseModel);
         }
 
     }
