@@ -35,8 +35,19 @@ namespace ControleDeGastos.Controllers
             // Chama o método de serviço para salvar a pessoa e aguarda a resposta assíncrona
             var autores = await _pessoaServiceInterface.Save(pessoaSaveRequestDTO);
 
-            // Retorna a resposta da API com o status HTTP 200 (Ok) e os dados de resposta
+            // Retorna o status HTTP 200 (Ok) e os dados de resposta
             return Ok(autores);
+        }
+
+        // Método GET para buscar uma pessoa por ID
+        [HttpGet("findById/{idPessoa}")]
+        public async Task<ActionResult<ResponseModel<PessoaModel>>> FindById(int idPessoa)
+        {
+            // Chama o método de serviço para buscar a pessoa pelo ID fornecido
+            var pessoa = await _pessoaServiceInterface.FindById(idPessoa);
+
+            // Retorna o status HTTP 200 (Ok) e os dados de resposta
+            return Ok(pessoa);
         }
 
     }

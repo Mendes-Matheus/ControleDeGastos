@@ -8,5 +8,9 @@ namespace ControleDeGastos.Service.Pessoa
         // Método para salvar uma nova pessoa no banco de dados
         Task<ResponseModel<List<PessoaModel>>> Save(PessoaSaveRequestDTO pessoaSaveRequestDTO);
 
+        // Método para encontrar uma pessoa no banco de dados pelo ID
+        Task<ResponseModel<PessoaModel>> FindById(int idAutor);
+
+
     }
 }

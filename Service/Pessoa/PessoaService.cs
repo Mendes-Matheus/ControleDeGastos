@@ -57,5 +57,33 @@ namespace ControleDeGastos.Service.Pessoa
                 };
             }
         }
+
+        // Método para encontrar uma pessoa no banco de dados pelo ID
+        public async Task<ResponseModel<PessoaModel>> FindById(int idPessoa)
+        {
+            try
+            {
+                // Busca a pessoa no banco com o ID fornecido
+                var pessoa = await _context.Pessoas.FirstOrDefaultAsync(pessoaBanco => pessoaBanco.Id == idPessoa);
+
+                // Retorna uma resposta com a pessoa encontrada, ou uma mensagem caso não tenha sido encontrada
+                var resposta = pessoa == null
+                    ? new ResponseModel<PessoaModel> { Mensagem = "Nenhuma pessoa localizada com esse id!" }
+                    : new ResponseModel<PessoaModel> { Dados = pessoa, Mensagem = "Pessoa Localizada!" };
+
+                return resposta;
+
+
+            }
+            catch (Exception ex)
+            {
+                // Caso ocorra algum erro, retorna uma resposta com a mensagem de erro
+                return new ResponseModel<PessoaModel>
+                {
+                    Mensagem = ex.Message,
+                    Status = false
+                };
+            }
+        }
     }
 }
