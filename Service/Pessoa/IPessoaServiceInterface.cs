@@ -9,10 +9,12 @@ namespace ControleDeGastos.Service.Pessoa
         Task<ResponseModel<List<PessoaModel>>> Save(PessoaSaveRequestDTO pessoaSaveRequestDTO);
 
         // Método para encontrar uma pessoa no banco de dados pelo ID
-        Task<ResponseModel<PessoaModel>> FindById(int idAutor);
+        Task<ResponseModel<object>> FindById(int idPessoa);
 
         // Método para buscar todas as pessoas no banco de dados
         Task<ResponseModel<List<PessoaModel>>> FindAll();
+
+        PessoaComTotaisDTO MapPessoaModelToDTO(PessoaModel pessoaModel);
 
     }
 }

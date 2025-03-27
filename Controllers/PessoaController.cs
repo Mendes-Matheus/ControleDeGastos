@@ -34,14 +34,18 @@ namespace ControleDeGastos.Controllers
 
         // Método GET para buscar uma pessoa por ID
         [HttpGet("findById/{idPessoa}")]
-        public async Task<ActionResult<ResponseModel<PessoaModel>>> FindById(int idPessoa)
+        public async Task<ActionResult<ResponseModel<object>>> FindById(int idPessoa)
         {
-            // Chama o método de serviço para buscar a pessoa pelo ID fornecido
-            var pessoa = await _pessoaServiceInterface.FindById(idPessoa);
+            var responseModel = await _pessoaServiceInterface.FindById(idPessoa);
 
-            // Retorna o status HTTP 200 (Ok) e os dados de resposta
-            return Ok(pessoa);
+            if (!responseModel.Status)
+            {
+                return NotFound(responseModel.Mensagem);
+            }
+
+            return Ok(responseModel);
         }
+
 
         // Método GET para buscar todas as pessoas
         [HttpGet("findAll")]

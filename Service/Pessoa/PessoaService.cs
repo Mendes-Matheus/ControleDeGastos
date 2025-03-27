@@ -59,32 +59,59 @@ namespace ControleDeGastos.Service.Pessoa
         }
 
         // Método para encontrar uma pessoa no banco de dados pelo ID
-        public async Task<ResponseModel<PessoaModel>> FindById(int idPessoa)
+        public async Task<ResponseModel<object>> FindById(int idPessoa)
         {
             try
             {
-                // Busca a pessoa no banco com o ID fornecido
                 var pessoa = await _context.Pessoas.FirstOrDefaultAsync(pessoaBanco => pessoaBanco.Id == idPessoa);
+                var resposta = new ResponseModel<object>();
 
-                // Retorna uma resposta com a pessoa encontrada, ou uma mensagem caso não tenha sido encontrada
-                var resposta = pessoa == null
-                    ? new ResponseModel<PessoaModel> { Mensagem = "Nenhuma pessoa localizada com esse id!" }
-                    : new ResponseModel<PessoaModel> { Dados = pessoa, Mensagem = "Pessoa Localizada!" };
+                if (pessoa == null)
+                {
+                    resposta.Mensagem = "Nenhuma pessoa localizada com esse id!";
+                    resposta.Status = false;
+                }
+                else
+                {
+                    if (pessoa.Idade < 18)
+                    {
+                        resposta.Dados = new PessoaMenorComTotaisDTO(
+                            pessoa.Id,
+                            pessoa.Nome,
+                            pessoa.Idade,
+                            pessoa.Mesada,
+                            pessoa.Despesas,
+                            pessoa.Saldo
+                        );
+                    }
+                    else
+                    {
+                        resposta.Dados = new PessoaComTotaisDTO(
+                            pessoa.Id,
+                            pessoa.Nome,
+                            pessoa.Idade,
+                            pessoa.Receitas,
+                            pessoa.Despesas,
+                            pessoa.Saldo
+                        );
+                    }
+
+                    resposta.Mensagem = "Pessoa Localizada!";
+                    resposta.Status = true;
+                }
 
                 return resposta;
-
-
             }
             catch (Exception ex)
             {
-                // Caso ocorra algum erro, retorna uma resposta com a mensagem de erro
-                return new ResponseModel<PessoaModel>
+                return new ResponseModel<object>
                 {
                     Mensagem = ex.Message,
                     Status = false
                 };
             }
         }
+
 
         // Método para buscar todas as pessoas no banco de dados
         public async Task<ResponseModel<List<PessoaModel>>> FindAll()
@@ -111,6 +138,34 @@ namespace ControleDeGastos.Service.Pessoa
                 };
             }
         }
+
+        public PessoaComTotaisDTO MapPessoaModelToDTO(PessoaModel pessoaModel)
+        {
+            // Retorna uma nova instância de PessoaComTotaisDTO com os valores do PessoaModel
+            return new PessoaComTotaisDTO(
+                pessoaModel.Id,
+                pessoaModel.Nome,
+                pessoaModel.Idade,
+                pessoaModel.Receitas,
+                pessoaModel.Despesas,
+                pessoaModel.Saldo
+            );
+        }
+
+        public PessoaMenorComTotaisDTO MapPessoaMenorModelToDTO(PessoaModel pessoaModel)
+        {
+            // Retorna uma nova instância de PessoaMenorComTotaisDTO com os valores do PessoaModel
+            return new PessoaMenorComTotaisDTO(
+                pessoaModel.Id,
+                pessoaModel.Nome,
+                pessoaModel.Idade,
+                pessoaModel.Mesada,
+                pessoaModel.Despesas,
+                pessoaModel.Saldo
+            );
+        }
+
+
 
     }
 }
