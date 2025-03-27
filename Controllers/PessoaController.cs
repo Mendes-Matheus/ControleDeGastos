@@ -50,5 +50,16 @@ namespace ControleDeGastos.Controllers
             return Ok(pessoa);
         }
 
+        // Método GET para buscar todas as pessoas
+        [HttpGet("findAll")]
+        public async Task<ActionResult<ResponseModel<List<PessoaModel>>>> FindAll()
+        {
+            // Chama o método de serviço para buscar todas as pessoas
+            var pessoas = await _pessoaServiceInterface.FindAll();
+
+            // Retorna o status HTTP 200 (Ok) e os dados de resposta
+            return Ok(pessoas);
+        }
+
     }
 }

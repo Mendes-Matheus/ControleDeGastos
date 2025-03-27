@@ -11,6 +11,8 @@ namespace ControleDeGastos.Service.Pessoa
         // Método para encontrar uma pessoa no banco de dados pelo ID
         Task<ResponseModel<PessoaModel>> FindById(int idAutor);
 
+        // Método para buscar todas as pessoas no banco de dados
+        Task<ResponseModel<List<PessoaModel>>> FindAll();
 
     }
 }

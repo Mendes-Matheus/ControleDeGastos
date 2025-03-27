@@ -85,5 +85,32 @@ namespace ControleDeGastos.Service.Pessoa
                 };
             }
         }
+
+        // Método para buscar todas as pessoas no banco de dados
+        public async Task<ResponseModel<List<PessoaModel>>> FindAll()
+        {
+            try
+            {
+                // Recupera todas as pessoas no banco de dados
+                var pessoas = await _context.Pessoas.ToListAsync();
+
+                // Retorna uma resposta com a lista de todas as pessoas
+                return new ResponseModel<List<PessoaModel>>
+                {
+                    Dados = pessoas
+                };
+
+            }
+            catch (Exception ex)
+            {
+                // Caso ocorra algum erro, retorna uma resposta com a mensagem de erro
+                return new ResponseModel<List<PessoaModel>>
+                {
+                    Mensagem = ex.Message,
+                    Status = false
+                };
+            }
+        }
+
     }
 }
