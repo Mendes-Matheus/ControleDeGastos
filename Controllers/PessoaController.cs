@@ -21,13 +21,6 @@ namespace ControleDeGastos.Controllers
         }
 
 
-        // Método GET que retorna uma View, típica de uma aplicação MVC, usada para exibir uma página ou informações visuais
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         // Método POST para salvar uma nova pessoa
         [HttpPost("save")]
         public async Task<ActionResult<ResponseModel<List<PessoaModel>>>> Save(PessoaSaveRequestDTO pessoaSaveRequestDTO)
