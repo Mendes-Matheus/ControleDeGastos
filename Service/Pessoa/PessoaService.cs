@@ -198,7 +198,78 @@ namespace ControleDeGastos.Service.Pessoa
             );
         }
 
+        
 
+        public async Task<ResponseModel<PessoaModel>> UpdateSaldo(long pessoaId, TransacaoModel transacao)
+        {
+            try
+            {
+                var pessoa = await _context.Pessoas.FirstOrDefaultAsync(p => p.Id == pessoaId);
 
+                if (pessoa == null)
+                {
+                    return new ResponseModel<PessoaModel>
+                    {
+                        Mensagem = $"Pessoa com ID {pessoaId} não encontrada",
+                        Status = false
+                    };
+                }
+
+                AtualizarValores(pessoa, transacao);
+
+                _context.Update(pessoa);
+                await _context.SaveChangesAsync();
+
+                return new ResponseModel<PessoaModel>
+                {
+                    Dados = pessoa,
+                    Mensagem = "Transação processada com sucesso",
+                    Status = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseModel<PessoaModel>
+                {
+                    Mensagem = ex.Message,
+                    Status = false
+                };
+            }
+        }
+
+        
+
+        private void AtualizarValores(PessoaModel pessoa, TransacaoModel transacao)
+        {
+            switch (transacao.TipoTransacao)
+            {
+                case TransacaoTipo.RECEITA:
+                    pessoa.Receitas += transacao.Valor;
+                    pessoa.Saldo += transacao.Valor;
+                    break;
+                case TransacaoTipo.MESADA:
+                    if (pessoa.Idade >= 18)
+                    {
+                        throw new InvalidOperationException("Mesada só pode ser aplicada a menores de idade");
+                    }
+                    pessoa.Mesada += transacao.Valor;
+                    pessoa.Saldo += transacao.Valor;
+                    break;
+                case TransacaoTipo.DESPESA:
+                    pessoa.Despesas += transacao.Valor;
+                    pessoa.Saldo -= transacao.Valor;
+                    break;
+                default:
+                    throw new ArgumentException($"Tipo de transação desconhecido: {transacao.TipoTransacao}");
+            }
+        }
+
+        // Método UpdateSaldo existente pode ser removido ou mantido como wrapper para o novo método
+        //public async Task<ResponseModel<PessoaModel>> UpdateSaldo(long pessoaId, TransacaoModel transacao)
+        //{
+        //    return await AtualizarPessoaComTransacaoAsync(pessoaId, transacao);
+        //}
     }
+
+
 }

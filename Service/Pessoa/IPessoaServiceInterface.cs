@@ -16,5 +16,8 @@ namespace ControleDeGastos.Service.Pessoa
 
         PessoaComTotaisDTO MapPessoaModelToDTO(PessoaModel pessoaModel);
 
+        Task<ResponseModel<PessoaModel>> UpdateSaldo(long pessoaId, TransacaoModel transacao);
+
+
     }
 }
