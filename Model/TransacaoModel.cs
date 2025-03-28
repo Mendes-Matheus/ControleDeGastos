@@ -72,6 +72,13 @@ namespace ControleDeGastos.Model
             Valor = valor;
             DataHora = dataHora;
         }
+        public TransacaoModel(PessoaModel pessoa)
+        {
+            Pessoa = pessoa;
+            PessoaId = pessoa.Id;
+        }
+
+
     }
 
 }
