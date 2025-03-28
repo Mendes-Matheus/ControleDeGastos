@@ -22,6 +22,12 @@ using Microsoft.EntityFrameworkCore;
     builder.Services.AddScoped<ITransacaoServiceInterface, TransacaoService>();
     builder.Services.AddScoped<ITransferenciaServiceInterface, TransferenciaService>();
 
+    builder.Services.AddControllers()
+        .AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+        });
+
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
